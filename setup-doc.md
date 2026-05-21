@@ -251,4 +251,4 @@ Paste the output when you ping Corey.
 
 Issues, questions, or anything weird → Corey (Slack or email).
 
-**Pilot end date:** [Corey: fill in]
+**Pilot end date:** TBD
