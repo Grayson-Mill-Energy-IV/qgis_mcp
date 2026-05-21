@@ -137,7 +137,7 @@ class QgisMCPServer(QObject):
                 "get_qgis_info": self.get_qgis_info,
                 "load_project": self.load_project,
                 "get_project_info": self.get_project_info,
-                "execute_code": self.execute_code,
+                # "execute_code": self.execute_code,  # GMELLC PILOT PATCH: disabled - arbitrary code execution risk. See INTERNAL_README.md
                 "add_vector_layer": self.add_vector_layer,
                 "add_raster_layer": self.add_raster_layer,
                 "get_layers": self.get_layers,
@@ -221,8 +221,17 @@ class QgisMCPServer(QObject):
             return str(layer.type())
     
     def execute_code(self, code, **kwargs):
-        """Execute arbitrary PyQGIS code"""
+        """Execute arbitrary PyQGIS code.
 
+        GMELLC PILOT PATCH: This handler is disabled for the Grayson Mill QGIS+Claude pilot.
+        Reason: arbitrary `exec()` over an unauthenticated localhost socket creates an
+        unacceptable RCE surface. See INTERNAL_README.md for context.
+        The original implementation is preserved below in a docstring for traceability.
+        """
+        raise Exception("execute_code is disabled in the Grayson Mill pilot build of qgis_mcp")
+
+    def _execute_code_DISABLED(self, code, **kwargs):
+        """Original execute_code implementation, preserved for reference. Not wired into dispatch."""
         # Capture stdout and stderr
         stdout_capture = io.StringIO()
         stderr_capture = io.StringIO()

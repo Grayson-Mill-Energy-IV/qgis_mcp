@@ -253,12 +253,17 @@ def render_map(ctx: Context, path: str, width: int = 800, height: int = 600) -> 
     return json.dumps(result, indent=2)
 
 
-@mcp.tool()
-def execute_code(ctx: Context, code: str) -> str:
-    """Execute arbitrary PyQGIS code provided as a string."""
-    qgis = get_qgis_connection()
-    result = qgis.send_command("execute_code", {"code": code})
-    return json.dumps(result, indent=2)
+# GMELLC PILOT PATCH: execute_code tool removed for the Grayson Mill pilot.
+# Reason: arbitrary code execution over an unauthenticated localhost socket creates
+# an unacceptable RCE surface. See INTERNAL_README.md.
+# The original tool registration is preserved below as comments for traceability.
+#
+# @mcp.tool()
+# def execute_code(ctx: Context, code: str) -> str:
+#     """Execute arbitrary PyQGIS code provided as a string."""
+#     qgis = get_qgis_connection()
+#     result = qgis.send_command("execute_code", {"code": code})
+#     return json.dumps(result, indent=2)
 
 
 
